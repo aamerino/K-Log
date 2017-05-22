@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from rest_framework.routers import DefaultRouter
+from KLog.views import FileUpload
 
-urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-]
+router = DefaultRouter()
+router.register(r'fileupload', FileUpload, 'FileUpload')
+urlpatterns = router.urls
+
+# urlpatterns = [
+#     url(r'^admin/', admin.site.urls),
+# ]
