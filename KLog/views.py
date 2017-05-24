@@ -6,7 +6,7 @@ from KLog.LogBuilders.Log4JavaParser import Log4JavaParser
 
 
 class FileUpload(viewsets.ModelViewSet):
-    parser_classes = (Log4JavaParser)
+    parser_classes = (Log4JavaParser,)
 
     def put(self, request, file, format=None):
         file = self.request.FILES['file']
