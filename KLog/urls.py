@@ -14,14 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from django.contrib import admin
-from rest_framework.routers import DefaultRouter
-from KLog.views import FileUpload
 
-router = DefaultRouter()
-router.register(r'fileupload', FileUpload, 'FileUpload')
-urlpatterns = router.urls
+from KLog.views import FileUploadView
 
-# urlpatterns = [
-#     url(r'^admin/', admin.site.urls),
-# ]
+# router = DefaultRouter()
+# router.register(r'fileupload', FileUpload, 'FileUpload')
+# urlpatterns = router.urls
+
+urlpatterns = [
+    url(r'^upload/(?P<filename>[^/]+)$', FileUploadView.as_view())
+]

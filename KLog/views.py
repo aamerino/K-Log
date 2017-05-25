@@ -1,14 +1,23 @@
-from rest_framework import viewsets, status
-from rest_framework.decorators import detail_route
+from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from KLog.LogBuilders.Log4JavaParser import Log4JavaParser
 
+# class FileUpload(viewsets.ModelViewSet):
+#     parser_classes = (Log4JavaParser,)
+#     queryset = Log.objects.all()
+#
+#     def put(self, request, file=None, format=None):
+#         file = self.request.FILES['file']
+#         return Response(status=status.HTTP_400_BAD_REQUEST)
+#         return file.readline()
 
-class FileUpload(viewsets.ModelViewSet):
-    parser_classes = (Log4JavaParser,)
+class FileUploadView(APIView):
+    parser_classes = (FileUploadParser,)
 
-    def put(self, request, file=None, format=None):
-        file = self.request.FILES['file']
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-        return file.readline()
+    def put(self, request, filename, format=None):
+        file_obj = request.data['file']
+        # ...
+        # do some stuff with uploaded file
+        # ...
+        return Response(status=204)
