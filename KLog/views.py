@@ -18,6 +18,7 @@ class FileUploadView(APIView):
     parser_classes = (Log4JavaParser, )
 
     def put(self, request, filename, format=None):
+        return Response(status=204)
         print(filename)
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(request.data)
