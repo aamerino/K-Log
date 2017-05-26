@@ -22,5 +22,5 @@ from KLog.views import FileUploadView
 # urlpatterns = router.urls
 
 urlpatterns = [
-    url(r'^upload/(?P<filename>[^/]+)$', FileUploadView.as_view())
+    url(r'^upload/Log4Java/(?P<filename>[^/]+)$', FileUploadView.as_view())
 ]
