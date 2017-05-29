@@ -8,14 +8,32 @@ import settings
 
 
 class Log4JavaParser(BaseParser):
+    RE_EXCEPTION = b"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}).+?([[])([\w]+)"
+
     media_type = 'multipart/form-data'
+
+    regexException = ""
+    currentException = deque([])
+
+    def __init__(self):
+        self.regexException = re.compile(self.RE_EXCEPTION)
+        # self.packageException = re.compile(self.RE_PACKAGE)
 
     def parse(self, stream, media_type=None, parser_context=None):
         print('dsds')
         encoding = parser_context.get('encoding', settings.DEFAULT_CHARSET)
         print('algo')
-        print(stream.readline())
-        return stream.read().decode(encoding)
+        for line in stream:
+            if (re.match(self.regexException, line)):
+                 exception = re.match(self.regexException, line)
+                 fecha = exception.group(1)
+                 classe = exception.group(3)
+                 line = stream.readline()
+                 # exceptionName = line.rsplit('.', 1)[1]
+                 print(fecha, classe, line)
+
+
+                 # return stream.read().decode(encoding)
 
 
 # class FileParser:
