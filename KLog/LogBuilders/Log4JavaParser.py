@@ -1,7 +1,6 @@
 import re
-from collections import deque
-from _datetime import datetime
 
+from collections import deque
 from rest_framework.parsers import BaseParser
 
 import settings
