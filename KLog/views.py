@@ -11,7 +11,7 @@ import pprint
 #         file = self.request.FILES['file']
 #         return Response(status=status.HTTP_400_BAD_REQUEST)
 #         return file.readline()
-from LogBuilders.Log4JavaParser import Log4JavaParser
+from logbuilders.Log4JavaParser import Log4JavaParser
 
 
 class FileUploadView(APIView):
