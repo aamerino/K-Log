@@ -1,6 +1,8 @@
 import re
 
 from collections import deque
+from datetime import datetime
+
 from rest_framework.parsers import BaseParser
 
 import settings
@@ -8,31 +10,34 @@ import settings
 
 class Log4JavaParser(BaseParser):
     RE_EXCEPTION = b"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}).+?([[])([\w]+)"
+    RE_EXCEPTION_NAME = b"([^.]*)(\\n+\')"
 
     media_type = 'multipart/form-data'
 
     regexException = ""
-    currentException = deque([])
+    regexExceptionName = ""
 
     def __init__(self):
         self.regexException = re.compile(self.RE_EXCEPTION)
-        # self.packageException = re.compile(self.RE_PACKAGE)
+        self.regexExceptionName = re.compile(self.RE_EXCEPTION_NAME)
 
     def parse(self, stream, media_type=None, parser_context=None):
-        print('dsds')
-        encoding = parser_context.get('encoding', settings.DEFAULT_CHARSET)
-        print('algo')
+        logs4JavaDTO = []
         for line in stream:
             if (re.match(self.regexException, line)):
                  exception = re.match(self.regexException, line)
                  fecha = exception.group(1)
                  classe = exception.group(3)
                  line = stream.readline()
-                 # exceptionName = line.rsplit('.', 1)[1]
-                 print(fecha, classe, line)
+                 #exceptionName = re.match(self.regexExceptionName, line)
+                 logs4JavaDTO.append(Log4JavaDTO(fecha, classe, line.decode(settings.DEFAULT_CHARSET).rsplit('.', 1)[1]))
+        return logs4JavaDTO
 
-
-                 # return stream.read().decode(encoding)
+class Log4JavaDTO():
+    def __init__(self, time, className, exceptionName):
+        self.dateTime = datetime.strptime(time.decode(settings.DEFAULT_CHARSET), '%Y-%m-%d %H:%M:%S,%f')
+        self.className = className.decode(settings.DEFAULT_CHARSET)
+        self.exceptionName = exceptionName
 
 
 # class FileParser:

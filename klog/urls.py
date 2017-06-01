@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 
-from KLog.views import FileUploadView
+from klog.views import FileUploadView
 
 # router = DefaultRouter()
 # router.register(r'fileupload', FileUpload, 'FileUpload')
