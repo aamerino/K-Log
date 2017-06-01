@@ -3,7 +3,7 @@ import pprint
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from logbuilders.Log4JavaParser import Log4JavaParser
+from klog.logbuilders.Log4JavaParser import Log4JavaParser
 from klog.models import Log
 
 

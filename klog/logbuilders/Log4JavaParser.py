@@ -1,11 +1,9 @@
 import re
-
-from collections import deque
 from datetime import datetime
 
 from rest_framework.parsers import BaseParser
 
-import settings
+from klog import settings
 
 
 class Log4JavaParser(BaseParser):
