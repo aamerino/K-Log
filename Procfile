@@ -1,1 +1,1 @@
-web: gunicorn KLog.wsgi
+web: gunicorn klog.wsgi
