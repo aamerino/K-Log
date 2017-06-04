@@ -1,5 +1,6 @@
 import pprint
 
+from django.db.models import Count
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -20,3 +21,13 @@ class FileUploadView(APIView):
                                error_class=log4JavaDTO.exceptionName,
                                date_time=log4JavaDTO.dateTime)
         return Response(status=204)
+
+
+class ClientView(APIView):
+
+    def get(self, request, format=None):
+        classes_count =  Log.all()\
+            .values('exception_name')\
+            .annotate(total=Count('exception_name'))\
+            .order_by('total')
+        return classes_count
