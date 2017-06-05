@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.conf.urls import url
 
-from klog.settings import STATICFILES_DIRS
 from klog.views import FileUploadView, ClientView
 
 # router = DefaultRouter()
