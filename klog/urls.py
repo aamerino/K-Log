@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 
+from klog.settings import STATIC_ROOT
 from klog.views import FileUploadView, ClientView
 
 # router = DefaultRouter()
@@ -23,5 +24,6 @@ from klog.views import FileUploadView, ClientView
 
 urlpatterns = [
     url(r'^client/firstgraph', ClientView.as_view()),
-    url(r'^upload/Log4Java/(?P<filename>[^/]+)$', FileUploadView.as_view())
+    url(r'^upload/Log4Java/(?P<filename>[^/]+)$', FileUploadView.as_view()),
+    url(r'^/', STATIC_ROOT)
 ]
