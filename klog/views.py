@@ -26,8 +26,7 @@ class FileUploadView(APIView):
 class ClientView(APIView):
 
     def get(self, request, format=None):
-        classes_count =  Log.all()\
-            .values('exception_name')\
+        classes_count = Log.objects.values('exception_name')\
             .annotate(total=Count('exception_name'))\
             .order_by('total')
-        return classes_count
+        return Response(classes_count)

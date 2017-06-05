@@ -7,4 +7,6 @@ class Log(models.Model):
     error_class = models.CharField(max_length=30)
     date_time = models.DateTimeField()
 
+    class Meta:
+        managed=True
 
