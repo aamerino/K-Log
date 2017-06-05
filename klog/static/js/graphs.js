@@ -2,7 +2,7 @@
 function pieChart(pD){
     var pC ={},    pieDim ={w:250, h: 250};
     pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
-
+    var id = '#dashboard';
     // create svg for pie chart.
     var piesvg = d3.select(id).append("svg")
         .attr("width", pieDim.w).attr("height", pieDim.h).append("g")
