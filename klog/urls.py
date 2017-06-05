@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
+from whitenoise import django
 
 from klog.settings import STATIC_URL
 from klog.views import FileUploadView, ClientView
@@ -23,7 +24,7 @@ from klog.views import FileUploadView, ClientView
 # urlpatterns = router.urls
 
 urlpatterns = [
+    url(r'^$', django.absolute_import),
     url(r'^client/firstgraph', ClientView.as_view()),
-    url(r'^upload/Log4Java/(?P<filename>[^/]+)$', FileUploadView.as_view()),
-    url(r'^/', STATIC_URL)
+    url(r'^upload/Log4Java/(?P<filename>[^/]+)$', FileUploadView.as_view())
 ]
