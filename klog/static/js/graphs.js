@@ -1,5 +1,6 @@
 
 function pieChart(pD){
+    function segColor(c){ return {low:"#807dba", mid:"#e08214",high:"#41ab5d"}[c]; }
     var pC ={},    pieDim ={w:250, h: 250};
     pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
     var id = '#dashboard';
