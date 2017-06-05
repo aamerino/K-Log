@@ -23,7 +23,6 @@ from klog.views import FileUploadView, ClientView
 # urlpatterns = router.urls
 
 urlpatterns = [
-    url(r'^$', STATICFILES_DIRS),
     url(r'^client/firstgraph', ClientView.as_view()),
     url(r'^upload/Log4Java/(?P<filename>[^/]+)$', FileUploadView.as_view())
 ]
