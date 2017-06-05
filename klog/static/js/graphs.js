@@ -1,7 +1,6 @@
 
 function pieChart(pD){
-    console.log(d3.request('https://pure-beach-44803.herokuapp.com/client/firstgraph')
-        .get(callback));
+    console.log(d3.json('https://pure-beach-44803.herokuapp.com/client/firstgraph'));
     function segColor(c){ return {low:"#807dba", mid:"#e08214",high:"#41ab5d"}[c]; }
     var pC ={},    pieDim ={w:250, h: 250};
     pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
