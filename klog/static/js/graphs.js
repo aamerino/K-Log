@@ -9,7 +9,7 @@ function pieChart(pD){
         .attr("transform", "translate("+pieDim.w/2+","+pieDim.h/2+")");
 
     // create function to draw the arcs of the pie slices.
-    var arc = d3.svg.arc().outerRadius(pieDim.r - 10).innerRadius(0);
+    var arc = d3.arc().outerRadius(pieDim.r - 10).innerRadius(0);
 
     // create a function to compute the pie slice angles.
     var pie = d3.layout.pie().sort(null).value(function(d) { return d.freq; });
