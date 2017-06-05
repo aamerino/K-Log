@@ -12,7 +12,7 @@ function pieChart(pD){
     var arc = d3.arc().outerRadius(pieDim.r - 10).innerRadius(0);
 
     // create a function to compute the pie slice angles.
-    var pie = d3.layout.pie().sort(null).value(function(d) { return d.freq; });
+    var pie = d3.pie().sort(null).value(function(d) { return d.freq; });
 
     // Draw the pie slices.
     piesvg.selectAll("path").data(pie(pD)).enter().append("path").attr("d", arc)
