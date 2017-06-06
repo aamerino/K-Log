@@ -2,16 +2,16 @@ datarino = []
 
 function getDataGraph() {
     d3.json('https://pure-beach-44803.herokuapp.com/client/firstgraph', function (error, data) {
-        // console.log(data);
-        // console.log(d3.nest().key(function(d){return d.exception_name}).entries(data));
         datarino = data;
     })
 }
-function pieChart(pD) {
+function pieChart() {
     getDataGraph();
     function segColor(c) {
         return {low: "#807dba", mid: "#e08214", high: "#41ab5d"}[c];
     }
+
+    var color = d3.scale.category20();
 
     var pC = {}, pieDim = {w: 250, h: 250};
     pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
@@ -30,20 +30,21 @@ function pieChart(pD) {
     });
 
     // Draw the pie slices.
-    piesvg.selectAll("path").data(pie(datarino)).enter().append("path").attr("d", arc)
+    piesvg.selectAll("path")
+        .data(pie(datarino))
+        .enter().append("path")
+        .attr("d", arc)
         .each(function (d) {
             this._current = d;
         })
-        .style("fill", function (d) {
-            return segColor(d.data.type);
-        })
-        .on("mouseover", mouseover).on("mouseout", mouseout);
+        .attr("fill",function(d,i){return color(i);})
 
     // create function to update pie-chart. This will be used by histogram.
     pC.update = function (nD) {
         piesvg.selectAll("path").data(pie(nD)).transition().duration(500)
             .attrTween("d", arcTween);
     }
+
     // Utility function to be called on mouseover a pie slice.
     function mouseover(d) {
         // call the update function of histogram with new data.
