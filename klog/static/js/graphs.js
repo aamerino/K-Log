@@ -26,7 +26,7 @@ function pieChart(pD) {
 
     // create a function to compute the pie slice angles.
     var pie = d3.pie().sort(null).value(function (d) {
-        return d.freq;
+        return d.total;
     });
 
     // Draw the pie slices.
