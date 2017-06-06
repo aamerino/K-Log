@@ -24,7 +24,13 @@ function pieChart() {
         .attr("transform", "translate(" + pieDim.w / 2 + "," + pieDim.h / 2 + ")");
 
     // create function to draw the arcs of the pie slices.
-    var arc = d3.arc().outerRadius(pieDim.r - 10).innerRadius(0);
+    var arc = d3.arc()
+        .outerRadius(pieDim.r - 10)
+        .innerRadius(0);
+
+    var labelArc = d3.arc()
+        .outerRadius(pieDim.r + 10)
+        .innerRadius(pieDim.r + 10);
 
     // create a function to compute the pie slice angles.
     var pie = d3.pie().sort(null).value(function (d) {
@@ -39,7 +45,9 @@ function pieChart() {
         .each(function (d) {
             this._current = d;
         })
-        .attr("fill",function(d,i){return color(i);});
+        .attr("fill", function (d, i) {
+            return color(i);
+        });
 
     // create function to update pie-chart. This will be used by histogram.
     pC.update = function (nD) {
@@ -72,6 +80,7 @@ function pieChart() {
             return arc(i(t));
         };
     }
+
     var g = piesvg.selectAll("arc")
         .data(datarino)
         .enter()
@@ -79,8 +88,12 @@ function pieChart() {
         .attr("class", "arc");
 
     g.append("text")
-        .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
-        .text(function(d) { return d.data.letter;})
+        .attr("transform", function (d) {
+            return "translate(" + labelArc.centroid(d) + ")";
+        })
+        .text(function (d) {
+            return d.exception_name;
+        })
         .style("fill", "#fff");
 
     return pC;
