@@ -1,13 +1,14 @@
-var datarino;
+datarino = []
 
-d3.json('https://pure-beach-44803.herokuapp.com/client/firstgraph', function (error, data) {
-    // console.log(data);
-    // console.log(d3.nest().key(function(d){return d.exception_name}).entries(data));
-    datarino = data;
-})
-
+function getDataGraph() {
+    d3.json('https://pure-beach-44803.herokuapp.com/client/firstgraph', function (error, data) {
+        // console.log(data);
+        // console.log(d3.nest().key(function(d){return d.exception_name}).entries(data));
+        datarino = data;
+    })
+}
 function pieChart(pD) {
-
+    getDataGraph();
     function segColor(c) {
         return {low: "#807dba", mid: "#e08214", high: "#41ab5d"}[c];
     }
