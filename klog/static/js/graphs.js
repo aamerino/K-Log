@@ -14,7 +14,7 @@ function pieChart() {
 
     var color = d3.scaleOrdinal(d3.schemeCategory20);
 
-    var pC = {}, pieDim = {w: 250, h: 250};
+    var pC = {}, pieDim = {w: 600, h: 600};
     pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
     var id = '#dashboard';
 
