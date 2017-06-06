@@ -11,11 +11,12 @@ function pieChart() {
         return {low: "#807dba", mid: "#e08214", high: "#41ab5d"}[c];
     }
 
-    var color = d3.scale.category20();
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
 
     var pC = {}, pieDim = {w: 250, h: 250};
     pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
     var id = '#dashboard';
+
     // create svg for pie chart.
     var piesvg = d3.select(id).append("svg")
         .attr("width", pieDim.w).attr("height", pieDim.h).append("g")
@@ -37,7 +38,7 @@ function pieChart() {
         .each(function (d) {
             this._current = d;
         })
-        .attr("fill",function(d,i){return color(i);})
+        .attr("fill",function(d,i){return color(i);});
 
     // create function to update pie-chart. This will be used by histogram.
     pC.update = function (nD) {
