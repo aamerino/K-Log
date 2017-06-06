@@ -1,6 +1,6 @@
 function pieChart(pD) {
-    var datarino;
-    datarino = d3.json('https://pure-beach-44803.herokuapp.com/client/firstgraph', function (error, data) {
+    datarino = []
+    d3.json('https://pure-beach-44803.herokuapp.com/client/firstgraph', function (error, data) {
         datarino = console.log(data);
     })
 
