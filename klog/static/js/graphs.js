@@ -91,8 +91,8 @@ function pieChart() {
         })
         .attr("text-anchor", "middle")
         .text(function (d) {
-            console.log(d);
-            return d.data;
+            console.log(d.data.exception_name);
+            return d.data.exception_name;
         });
     return pC;
 }
