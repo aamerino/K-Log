@@ -1,10 +1,11 @@
-datarino = []
+datarino = [];
 
 function getDataGraph() {
     d3.json('https://pure-beach-44803.herokuapp.com/client/firstgraph', function (error, data) {
         datarino = data;
     })
 }
+
 function pieChart() {
     getDataGraph();
     function segColor(c) {
@@ -44,7 +45,7 @@ function pieChart() {
     pC.update = function (nD) {
         piesvg.selectAll("path").data(pie(nD)).transition().duration(500)
             .attrTween("d", arcTween);
-    }
+    };
 
     // Utility function to be called on mouseover a pie slice.
     function mouseover(d) {
