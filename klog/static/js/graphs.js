@@ -74,12 +74,14 @@ function pieChart() {
     }
     var g = piesvg.selectAll("arc")
         .data(datarino)
-        .enter().append("g")
+        .enter()
+        .append("g")
         .attr("class", "arc");
 
-    g.append("path")
-        .attr("d", arc)
-        .style("fill", function(d) { return color(d.exception_name);});
+    g.append("text")
+        .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+        .text(function(d) { return d.data.letter;})
+        .style("fill", "#fff");
 
     return pC;
 }
