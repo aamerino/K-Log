@@ -1,8 +1,8 @@
 function pieChart(pD) {
     var datarino;
-    console.log(d3.json('https://pure-beach-44803.herokuapp.com/client/firstgraph', function (error, data) {
+    datarino = d3.json('https://pure-beach-44803.herokuapp.com/client/firstgraph', function (error, data) {
         datarino = console.log(data);
-    }))
+    })
 
     function segColor(c) {
         return {low: "#807dba", mid: "#e08214", high: "#41ab5d"}[c];
