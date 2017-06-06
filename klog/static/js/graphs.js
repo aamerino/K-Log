@@ -23,6 +23,9 @@ function pieChart() {
         .attr("width", pieDim.w).attr("height", pieDim.h).append("g")
         .attr("transform", "translate(" + pieDim.w / 2 + "," + pieDim.h / 2 + ")");
 
+    var w = 300;
+    var outerRadius = w / 2;
+
     // create function to draw the arcs of the pie slices.
     var arc = d3.arc()
         .outerRadius(pieDim.r - 10)
@@ -48,12 +51,6 @@ function pieChart() {
         .attr("fill", function (d, i) {
             return color(i);
         });
-
-    // create function to update pie-chart. This will be used by histogram.
-    pC.update = function (nD) {
-        piesvg.selectAll("path").data(pie(nD)).transition().duration(500)
-            .attrTween("d", arcTween);
-    };
 
     // Utility function to be called on mouseover a pie slice.
     function mouseover(d) {
@@ -81,21 +78,20 @@ function pieChart() {
         };
     }
 
-    var g = piesvg.selectAll("arc")
-        .data(datarino)
+    var arcs = svg.selectAll("g.arc")
+        .data(pie(datarino))
         .enter()
         .append("g")
-        .attr("class", "arc");
+        .attr("class", "arc")
+        .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")");
 
-    g.append("text")
+    arcs.append("text")
         .attr("transform", function (d) {
-            console.log(d);
-            return "translate(" + labelArc.centroid() + ")";
+            return "translate(" + arc.centroid(d) + ")";
         })
+        .attr("text-anchor", "middle")
         .text(function (d) {
             return d.exception_name;
-        })
-        .style("fill", "#fff");
-
+        });
     return pC;
 }
