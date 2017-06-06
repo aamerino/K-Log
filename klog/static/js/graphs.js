@@ -74,7 +74,7 @@ function pieChart() {
     }
 
     var text = piesvg.select(".labelName").selectAll("text")
-        .data(pie(datarino), function(d){ return d.data.label });
+        .data(pie(datarino), function(d){ return d.exception_name });
 
     text.enter()
         .append("text")
