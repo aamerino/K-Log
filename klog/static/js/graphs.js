@@ -73,7 +73,7 @@ function pieChart() {
         };
     }
     var g = piesvg.selectAll("arc")
-        .data(pie)
+        .data(datarino)
         .enter().append("g")
         .attr("class", "arc");
 
