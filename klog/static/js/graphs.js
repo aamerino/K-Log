@@ -1,7 +1,12 @@
+var datarino;
+
+d3.json('https://pure-beach-44803.herokuapp.com/client/firstgraph', function (error, data) {
+    // console.log(data);
+    // console.log(d3.nest().key(function(d){return d.exception_name}).entries(data));
+    datarino = data;
+})
+
 function pieChart(pD) {
-    d3.json('https://pure-beach-44803.herokuapp.com/client/firstgraph', function (error, data) {
-        // console.log(data);
-        // console.log(d3.nest().key(function(d){return d.exception_name}).entries(data));
 
     function segColor(c) {
         return {low: "#807dba", mid: "#e08214", high: "#41ab5d"}[c];
@@ -24,7 +29,7 @@ function pieChart(pD) {
     });
 
     // Draw the pie slices.
-    piesvg.selectAll("path").data(pie(data)).enter().append("path").attr("d", arc)
+    piesvg.selectAll("path").data(pie(datarino)).enter().append("path").attr("d", arc)
         .each(function (d) {
             this._current = d;
         })
@@ -53,7 +58,6 @@ function pieChart(pD) {
             return [v.State, v.total];
         }), barColor);
     }
-    })
 
     // Animating the pie-slice requiring a custom function which specifies
     // how the intermediate paths should be drawn.
