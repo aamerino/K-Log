@@ -29,8 +29,8 @@ function pieChart() {
         .innerRadius(0);
 
     var labelArc = d3.arc()
-        .outerRadius(pieDim.r + 10)
-        .innerRadius(pieDim.r + 10);
+        .outerRadius(pieDim.r - 10)
+        .innerRadius(0);
 
     // create a function to compute the pie slice angles.
     var pie = d3.pie().sort(null).value(function (d) {
