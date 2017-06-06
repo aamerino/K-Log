@@ -76,6 +76,9 @@ function pieChart() {
     var text = piesvg.select(".labelName").selectAll("text")
         .data(pie(datarino), function(d){ return d.exception_name });
 
+    piesvg.append("g")
+        .attr("class", "labels");
+
     text.enter()
         .append("text")
         .attr("dy", ".35em")
