@@ -90,7 +90,7 @@ function pieChart() {
     g.append("text")
         .attr("transform", function (d) {
             console.log(d);
-            return "translate(" + labelArc.centroid(d.exception_name) + ")";
+            return "translate(" + labelArc.centroid() + ")";
         })
         .text(function (d) {
             return d.exception_name;
