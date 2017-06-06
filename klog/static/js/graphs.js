@@ -2,7 +2,7 @@ function pieChart(pD) {
     datarino = []
     d3.json('https://pure-beach-44803.herokuapp.com/client/firstgraph', function (error, data) {
         console.log(data);
-        datarino = data;
+        console.log(d3.nest().key(function(d){return d.exception_name}).entries(data));
     })
 
     function segColor(c) {
