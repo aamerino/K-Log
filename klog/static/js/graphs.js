@@ -72,19 +72,14 @@ function pieChart() {
             return arc(i(t));
         };
     }
+    var g = piesvg.selectAll("arc")
+        .data(pie)
+        .enter().append("g")
+        .attr("class", "arc");
 
-    var text = piesvg.select(".labelName").selectAll("text")
-        .data(pie(datarino), function(d){ return d.exception_name });
-
-    piesvg.append("g")
-        .attr("class", "labels");
-
-    text.enter()
-        .append("text")
-        .attr("dy", ".35em")
-        .text(function(d) {
-            return (d.exception_name);
-        });
+    g.append("path")
+        .attr("d", arc)
+        .style("fill", function(d) { return color(d.exception_name);});
 
     return pC;
 }
