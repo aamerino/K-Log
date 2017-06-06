@@ -92,7 +92,7 @@ function pieChart() {
         .attr("text-anchor", "middle")
         .text(function (d) {
             console.log(d);
-            return d.exception_name;
+            return d.data.exception_name;
         });
     return pC;
 }
