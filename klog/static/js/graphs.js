@@ -78,7 +78,7 @@ function pieChart() {
         };
     }
 
-    var arcs = svg.selectAll("g.arc")
+    var arcs = piesvg.selectAll("g.arc")
         .data(pie(datarino))
         .enter()
         .append("g")
