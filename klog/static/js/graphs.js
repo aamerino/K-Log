@@ -73,7 +73,7 @@ function pieChart() {
         };
     }
 
-    var text = svg.select(".labelName").selectAll("text")
+    var text = piesvg.select(".labelName").selectAll("text")
         .data(pie(data), function(d){ return d.data.label });
 
     text.enter()
