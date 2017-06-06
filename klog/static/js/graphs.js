@@ -87,7 +87,7 @@ function pieChart() {
 
     arcs.append("text")
         .attr("transform", function (d) {
-            return "translate(" + arc.centroid(d) + ")";
+            return "translate(" + labelArc.centroid(d) + ")";
         })
         .attr("text-anchor", "middle")
         .text(function (d) {
