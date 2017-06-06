@@ -89,6 +89,7 @@ function pieChart() {
 
     g.append("text")
         .attr("transform", function (d) {
+            console.log(d);
             return "translate(" + labelArc.centroid(d) + ")";
         })
         .text(function (d) {
