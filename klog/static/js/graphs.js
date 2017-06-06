@@ -72,17 +72,16 @@ function pieChart() {
             return arc(i(t));
         };
     }
-    piesvg.selectAll("text").data(datarino)
-        .enter()
+
+    var text = svg.select(".labelName").selectAll("text")
+        .data(pie(data), function(d){ return d.data.label });
+
+    text.enter()
         .append("text")
-        .attr("text-anchor", "middle")
-        .attr("transform", function(d){
-            var pos = arc.centroid(d);
-            pos[0] = radius * (midAngle(d) < Math.PI ? 1 : -1);
-            return "translate("+ pos +")";
-        })
+        .attr("dy", ".35em")
         .text(function(d) {
-            return d.exception_name;
+            return (d.exception_name);
         });
+
     return pC;
 }
