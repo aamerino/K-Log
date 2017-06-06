@@ -72,6 +72,17 @@ function pieChart() {
             return arc(i(t));
         };
     }
-
+    piesvg.selectAll("text").data(datarino)
+        .enter()
+        .append("text")
+        .attr("text-anchor", "middle")
+        .attr("transform", function(d){
+            var pos = outerArc.centroid(d);
+            pos[0] = radius * (midAngle(d) < Math.PI ? 1 : -1);
+            return "translate("+ pos +")";
+        })
+        .text(function(d) {
+            return d.exception_name;
+        });
     return pC;
 }
