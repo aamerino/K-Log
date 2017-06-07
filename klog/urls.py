@@ -15,13 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 
-from klog.views import FileUploadView, ClientView
+from klog.views import FileUploadView, ExceptionView
 
 # router = DefaultRouter()
 # router.register(r'fileupload', FileUpload, 'FileUpload')
 # urlpatterns = router.urls
 
 urlpatterns = [
-    url(r'^client/firstgraph', ClientView.as_view()),
-    url(r'^upload/Log4Java/(?P<filename>[^/]+)$', FileUploadView.as_view())
+    url(r'^api/v1/client/(?P<action>[^/]+)([/]?)$', ExceptionView.as_view()),
+    url(r'^api/v1/upload/log4Java', FileUploadView.as_view())
 ]

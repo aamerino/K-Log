@@ -1,6 +1,6 @@
 
 function getDataGraph(callback) {
-    d3.json('https://pure-beach-44803.herokuapp.com/client/firstgraph', function (error, data) {
+    d3.json('https://pure-beach-44803.herokuapp.com/api/v1/client/countExceptions', function (error, data) {
         datarino = data;
         callback(data);
     })

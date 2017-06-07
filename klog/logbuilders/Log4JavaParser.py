@@ -16,8 +16,10 @@ class Log4JavaParser(BaseParser):
     regexExceptionName = ""
 
     def __init__(self):
+        start = datetime.now()
         self.regexException = re.compile(self.RE_EXCEPTION)
         self.regexExceptionName = re.compile(self.RE_EXCEPTION_NAME)
+        print("Time generating regex: %s" % (datetime.now() - start))
 
     def parse(self, stream, media_type=None, parser_context=None):
         logs4JavaDTO = []
