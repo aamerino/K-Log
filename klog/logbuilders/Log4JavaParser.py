@@ -1,5 +1,5 @@
 import re
-from datetime import datetime
+from datetime import datetime, time
 
 from rest_framework.parsers import BaseParser
 
@@ -21,6 +21,7 @@ class Log4JavaParser(BaseParser):
 
     def parse(self, stream, media_type=None, parser_context=None):
         logs4JavaDTO = []
+        start = datetime.now();
         for line in stream:
             if (re.match(self.regexException, line)):
                  exception = re.match(self.regexException, line)
@@ -29,6 +30,7 @@ class Log4JavaParser(BaseParser):
                  line = stream.readline()
                  #exceptionName = re.match(self.regexExceptionName, line)
                  logs4JavaDTO.append(Log4JavaDTO(fecha, classe, line.decode(settings.DEFAULT_CHARSET).rsplit('.', 1)[1]))
+        print("Time took parsing: %s" % (datetime.now() - start))
         return logs4JavaDTO
 
 class Log4JavaDTO():
