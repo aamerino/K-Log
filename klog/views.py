@@ -12,9 +12,6 @@ class FileUploadView(APIView):
     parser_classes = (Log4JavaParser, )
 
     def put(self, request, filename, format=None):
-        print(filename)
-        pp = pprint.PrettyPrinter(indent=4)
-        pp.pprint(request.data)
         for log4JavaDTO in request.data:
             print(log4JavaDTO.dateTime)
             Log.objects.create(exception_name=log4JavaDTO.exceptionName,
