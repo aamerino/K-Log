@@ -1,6 +1,5 @@
 from django.db.models import Count
 from django.db.models.functions import TruncDay
-from rest_framework.response import Response
 
 from klog.models import Log
 
@@ -14,13 +13,12 @@ def countExceptions():
 
 
 def getExceptionsWithDateTime():
-    print(Log.objects \
-          .annotate(day=TruncDay('date_time')))
     return Log.objects\
-        .annotate(day=TruncDay('date_time'))\
-        .values('day')\
-        .annotate(c=Count('id'))\
-        .values('day', 'c')
+        .annotate(date=TruncDay('date_time')) \
+        .values('date')\
+        .annotate(count=Count('id'))\
+        .values('date', 'count')\
+        .order_by('date')
 
 
 actionsDict={

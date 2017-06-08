@@ -1,7 +1,5 @@
-
 function getDataGraph(callback) {
-    d3.json('https://pure-beach-44803.herokuapp.com/api/v1/client/countExceptions', function (error, data) {
-        datarino = data;
+    d3.json('http://localhost:8000/api/v1/client/countExceptions', function (error, data) {
         callback(data);
     })
 }
@@ -19,10 +17,12 @@ function pieChart(datarino) {
 
     // create svg for pie chart.
     var piesvg = d3.select(id).append("svg")
-        .attr("width", pieDim.w).attr("height", pieDim.h).append("g")
-        .attr("transform", "translate(" + pieDim.w / 2 + "," + pieDim.h / 2 + ")");
+        .attr("width", 800)
+        .attr("height", 800)
+        .append("g")
+        .attr("transform", "translate(" + (pieDim.w + 300) / 2 + "," + (pieDim.h + 300) / 2 + ")");
 
-    var w = 300;
+    var w = 0;
     var outerRadius = w / 2;
 
     // create function to draw the arcs of the pie slices.
@@ -42,7 +42,8 @@ function pieChart(datarino) {
     // Draw the pie slices.
     piesvg.selectAll("path")
         .data(pie(datarino))
-        .enter().append("path")
+        .enter()
+        .append("path")
         .attr("d", arc)
         .each(function (d) {
             this._current = d;
@@ -51,103 +52,84 @@ function pieChart(datarino) {
             return color(i);
         });
 
-    // Utility function to be called on mouseover a pie slice.
-    function mouseover(d) {
-        // call the update function of histogram with new data.
-        hG.update(fData.map(function (v) {
-            return [v.State, v.freq[d.data.type]];
-        }), segColor(d.data.type));
-    }
-
-    //Utility function to be called on mouseout a pie slice.
-    function mouseout(d) {
-        // call the update function of histogram with all data.
-        hG.update(fData.map(function (v) {
-            return [v.State, v.total];
-        }), barColor);
-    }
-
-    // Animating the pie-slice requiring a custom function which specifies
-    // how the intermediate paths should be drawn.
-    function arcTween(a) {
-        var i = d3.interpolate(this._current, a);
-        this._current = i(0);
-        return function (t) {
-            return arc(i(t));
-        };
-    }
-
     var arcs = piesvg.selectAll("g.arc")
         .data(pie(datarino))
         .enter()
         .append("g")
         .attr("class", "arc")
-        .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")");
 
     arcs.append("text")
         .attr("transform", function (d) {
-            return "translate(" + labelArc.centroid(d) + ")";
+            var c = arc.centroid(d),
+                x = c[0],
+                y = c[1],
+                // pythagorean theorem for hypotenuse
+                h = Math.sqrt(x * x + y * y);
+            console.log("translate(" + (x / h * pieDim.r) + ',' +
+                (y / h * pieDim.r) + ")");
+            return "translate(" + (x / h * pieDim.r) + ',' +
+                (y / h * pieDim.r) + ")";
         })
-        .attr("text-anchor", "middle")
+        .attr("text-anchor", function (d) {
+            // are we past the center?
+            return (d.endAngle + d.startAngle) / 2 > Math.PI ?
+                "end" : "start";
+        })
         .text(function (d) {
-            console.log(d.data.exception_name);
             return d.data.exception_name;
         });
     return pC;
 }
 
 function lineChart() {
-    var svg = d3.select("svg"),
-        margin = {top: 20, right: 20, bottom: 30, left: 50},
-        width = +svg.attr("width") - margin.left - margin.right,
-        height = +svg.attr("height") - margin.top - margin.bottom,
-        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var margin = {top: 50, right: 50, bottom: 50, left: 50}
+        , width = window.innerWidth - margin.left - margin.right // Use the window's width
+        , height = window.innerHeight - margin.top - margin.bottom; // Use the window's height
 
-    var parseTime = d3.timeParse("%d-%b-%y");
+    var parseTime = d3.timeParse("%Y-%m-%dT%H:%M:%SZ");
 
-    var x = d3.scaleTime()
-        .rangeRound([0, width]);
+    d3.json('http://localhost:8000/api/v1/client/getExceptionsWithDateTime', function (d) {
+        d.forEach(function (d) {
+            d.date = parseTime(d.date);
+            d.count = +d.count;
+            return d;
+        });
+        var xScale = d3.scaleTime()
+            .domain([d[0].date, d[d.length - 1].date]) // input
+            .range([0, width]);// output
 
-    var y = d3.scaleLinear()
-        .rangeRound([height, 0]);
+        var yScale = d3.scaleLinear()
+            .domain([0, 500]) // input
+            .range([height, 0]); // output
 
-    var line = d3.line()
-        .x(function(d) { return x(d.date); })
-        .y(function(d) { return y(d.close); });
+        var line = d3.line()
+            .x(function (d, i) {
+                return xScale(d.date);
+            }) // set the x values for the line generator
+            .y(function (d) {
+                return yScale(d.count);
+            }) // set the y values for the line generator
+            .curve(d3.curveMonotoneX)// apply smoothing to the line
 
-    d3.tsv("data.tsv", function(d) {
-        d.date = parseTime(d.date);
-        d.close = +d.close;
-        return d;
-    }, function(error, data) {
-        if (error) throw error;
+        var svg = d3.select('#dashboard').append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain(d3.extent(data, function(d) { return d.close; }));
-
-        g.append("g")
+        svg.append("g")
+            .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x))
-            .select(".domain")
-            .remove();
+            .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
 
-        g.append("g")
-            .call(d3.axisLeft(y))
-            .append("text")
-            .attr("fill", "#000")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", "0.71em")
-            .attr("text-anchor", "end")
-            .text("Price ($)");
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
 
-        g.append("path")
-            .datum(data)
-            .attr("fill", "none")
-            .attr("stroke", "steelblue")
-            .attr("stroke-linejoin", "round")
-            .attr("stroke-linecap", "round")
-            .attr("stroke-width", 1.5)
-            .attr("d", line);
-    });
+        svg.append("path")
+            .datum(d) // 10. Binds data to the line
+            .attr("class", "line") // Assign a class for styling
+            .attr("d", line); // 11. Calls the line generator
+
+    })
 }
