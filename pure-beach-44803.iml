@@ -7,7 +7,6 @@
         <option name="settingsModule" value="klog/settings.py" />
         <option name="manageScript" value="manage.py" />
         <option name="environment" value="&lt;map/&gt;" />
-        <option name="commandsToSkip" value="" />
       </configuration>
     </facet>
   </component>
@@ -16,32 +15,5 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-  </component>
-  <component name="TemplatesService">
-    <option name="TEMPLATE_CONFIGURATION" value="Django" />
-    <option name="TEMPLATE_FOLDERS">
-      <list>
-        <option value="$MODULE_DIR$/klog/static" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/django/contrib/gis/templates/gis" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/django/contrib/gis/templates/gis/admin" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/django/contrib/gis/templates/gis/google" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/django/contrib/admin/templates/admin" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/django/contrib/admin/templates/admin/auth/user" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/django/contrib/admin/templates/admin/includes" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/django/contrib/admin/templates/admin/edit_inline" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/django/contrib/admin/templates/registration" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/django/contrib/admindocs/templates/admin_doc" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/rest_framework/templates/rest_framework" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/rest_framework/templates/rest_framework/docs" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/rest_framework/templates/rest_framework/docs/auth" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/rest_framework/templates/rest_framework/docs/langs" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/rest_framework/templates/rest_framework/admin" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/rest_framework/templates/rest_framework/inline" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/rest_framework/templates/rest_framework/filters" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/rest_framework/templates/rest_framework/vertical" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/rest_framework/templates/rest_framework/horizontal" />
-        <option value="$MODULE_DIR$/venv/Lib/site-packages/rest_framework/templates/rest_framework/pagination" />
-      </list>
-    </option>
   </component>
 </module>
