@@ -81,7 +81,6 @@ function pieChart() {
     })
 }
 
-
 function lineChart() {
     var margin = {top: 50, right: 50, bottom: 50, left: 50}
         , width = window.innerWidth - margin.left - margin.right // Use the window's width
@@ -89,7 +88,7 @@ function lineChart() {
 
     var parseTime = d3.timeParse("%Y-%m-%dT%H:%M:%SZ");
 
-    d3.json(getDomain() +'/api/v1/client/getExceptionsWithDateTime', function (d) {
+    d3.json(getDomain() + '/api/v1/client/getExceptionsWithDateTime', function (d) {
         d.forEach(function (d) {
             d.date = parseTime(d.date);
             d.count = +d.count;
@@ -133,4 +132,64 @@ function lineChart() {
             .attr("d", line); // 11. Calls the line generator
 
     })
+}
+
+function nodeChart() {
+    var svg =  d3.select('#dashboard').append("svg").attr("width", 800)
+            .attr("height", 800),
+        diameter = +svg.attr("width"),
+        g = svg.append("g").attr("transform", "translate(2,2)"),
+        format = d3.format(",d");
+
+    var pack = d3.pack()
+        .size([diameter - 4, diameter - 4]);
+
+    d3.json(getDomain() + '/api/v1/getStructureWithExceptions', function (error, root) {
+        if (error) throw error;
+
+        root = d3.hierarchy(root)
+            .sum(function (d) {
+                console.log(d.size)
+                return d.size;
+            })
+            .sort(function (a, b) {
+                return b.value - a.value;
+            });
+
+        var color = d3.scaleLinear()
+            .domain([-1, 0, 200])
+            .range(["green", "white", "red"]);
+
+        var node = g.selectAll(".node")
+            .data(pack(root).descendants())
+            .enter().append("g")
+            // .attr("class", function (d) {
+            //     return d.children ? "node" : "leaf node";
+            // })
+            .attr("transform", function (d) {
+                return "translate(" + d.x + "," + d.y + ")";
+            });
+
+        node.append("title")
+            .text(function (d) {
+                return d.data.name + "\n" + format(d.value);
+            });
+
+        node.append("circle")
+            .style('fill', function(d) {
+                console.log(d['data']['size'] || 0)
+                return color(d['data']['size'] != undefined ? d['data']['size'] : 0)
+            })
+            .attr("r", function (d) {
+                return d.r;
+            });
+
+        node.filter(function (d) {
+            return !d.children;
+        }).append("text")
+            .attr("dy", "0.3em")
+            .text(function (d) {
+                return d.data.name.substring(0, d.r / 3);
+            });
+    });
 }

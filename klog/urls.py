@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 
-from klog.views import FileUploadView, ExceptionView
+from klog.views import MockView
+from klog.views.ExceptionView import ExceptionView
+from klog.views.FileUploadView import FileUploadView
 
 # router = DefaultRouter()
 # router.register(r'fileupload', FileUpload, 'FileUpload')
@@ -23,5 +25,6 @@ from klog.views import FileUploadView, ExceptionView
 
 urlpatterns = [
     url(r'^api/v1/client/(?P<action>[^/]+)([/]?)$', ExceptionView.as_view()),
-    url(r'^api/v1/upload/log4Java', FileUploadView.as_view())
+    url(r'^api/v1/upload/log4Java',  FileUploadView.as_view()),
+    url(r'^api/v1/getStructureWithExceptions', MockView.getStructureWithExceptions)
 ]
