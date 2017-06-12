@@ -99,7 +99,7 @@ function lineChart() {
             .range([0, width]);// output
 
         var yScale = d3.scaleLinear()
-            .domain([0, 500]) // input
+            .domain([0, 2000]) // input
             .range([height, 0]); // output
 
         var line = d3.line()
